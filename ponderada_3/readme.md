@@ -28,10 +28,14 @@ Este projeto apresenta um chatbot simples integrado com ROS2, projetado para int
 2. **Construa o Pacote com o Colcon:**
 
     `colcon build --packages-select chat_bot`
-3. **Fonte o Ambiente ROS2:**
+   
+4. **Fonte o Ambiente ROS2:**
+
 `source install/local_setup.bash`
-4. **Execute o Chatbot:**
-seu_workspace/src/ponderada_3/chat_bot/chat_bot/./test-chatbot.py
+
+6. **Execute o script do chatbot via terminal:**
+
+``seu_workspace/src/ponderada_3/chat_bot/chat_bot/./test-chatbot.py``
 
 Após isso o usuário terá acesso ao chatbot para enviar comandos para o robô. 
 
