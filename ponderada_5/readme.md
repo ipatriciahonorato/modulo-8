@@ -54,4 +54,4 @@ chainlit run app.py -w
 
 ## Vídeo Demonstrativo
 
-Disponível nesse [link]().
+Disponível nesse [link](https://www.youtube.com/watch?v=6aw6G0HP_l8).
