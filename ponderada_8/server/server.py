@@ -3,32 +3,36 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
-# Load environment variables
+# Carrega as variáveis do ambiente
 load_dotenv()
 
-# Initialize Flask application
+# Inicializa a aplicação
 app = Flask(__name__)
 
-# Initialize OpenAI client with API key from .env file
+# Inicializa OpenAI client com a API key do .env file
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 @app.route("/")
-def hello_world():
-    # Get the input text from query parameter
+def translate_and_speak():
     input_text = request.args.get('text', '')
 
-    # Generate speech using OpenAI's API
-    response = client.audio.speech.create(
-        model="tts-1",
-        voice="alloy",
-        input=input_text
-    )
+    try:
+        # Gera a fala usando a API da OpenAI
+        response = client.audio.speech.create(
+            model="tts-1",
+            voice="alloy",
+            input=input_text
+        )
 
-    # Fetch audio data using the content property
-    audio_data = response.content
+        # Busca dados de áudio usando a "propriedade content"
+        audio_data = response.content
 
-    # Return audio data as a response
-    return Response(audio_data, mimetype="audio/mpeg")
+        # Retorna o audio como resposta
+        return Response(audio_data, mimetype="audio/mpeg")
+    except Exception as e:
+        print(f"Erro ao gerar áudio: {e}")
+        return Response("Erro ao gerar áudio", status=500)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
