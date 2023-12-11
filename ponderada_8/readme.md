@@ -1,18 +1,31 @@
-# Construção de um Chatbot com LLM da OpenAI
+# Tradutor de Voz e Texto com OpenAI e Chainlit
 
 ## Visão Geral
-Este projeto envolve a criação de um chatbot avançado usando o modelo de Linguagem de Grande Escala (LLM) do ChatGPT 3.5 da OpenAI. O chatbot é projetado para responder perguntas baseadas em conteúdos de documentos PDF, particularmente focado em ["Workshop rules and safety considerations".](https://github.com/ipatriciahonorato/modulo-8/blob/main/ponderada_5/Workshop%20rules%20and%20safety%20considerations%20_%20Students.pdf)
+Este projeto apresenta um tradutor de voz e texto que utiliza o modelo de Linguagem de Grande Escala (LLM) da OpenAI. A aplicação capta voz em português, converte-a em texto, traduz para inglês e fornece a resposta em texto e áudio. O projeto se divide em um aplicativo Chainlit para a interface do usuário e um servidor Flask para processamento de áudio.
 
 ## Tecnologias Utilizadas
-- ChatGPT 3.5 (OpenAI): Modelo avançado para processamento e geração de linguagem natural.
-- Langchain e PyPDF2: Bibliotecas para processamento de texto e manipulação de PDF.
-- Chainlit: Framework para criação da interface do chatbot.
-- Python e Ambiente Virtual (venv): Para desenvolvimento e isolamento das dependências do projeto
+- OpenAI GPT-3.5: Para tradução e geração de áudio.
+- Chainlit: Framework para a interface interativa do usuário.
+- Python e Ambientes Virtuais (LLM e server_env): Para desenvolvimento e gerenciamento de dependências separadas do aplicativo Chainlit e do servidor Flask.
+- React-Speech-Recognition: Biblioteca para captura de voz na interface do usuário.
+- Flask: Para criar o servidor de geração de áudio.
 
 ## Funcionalidades
-- Consulta de Normas de Segurança: Capacidade de responder a perguntas baseadas em documentos PDF.
-- Interface Gráfica Interativa: Interface amigável para interações fáceis com o usuário.
-- Processamento Eficiente de PDF: Extração e utilização do conteúdo textual de PDFs.
+- Tradução de Voz para Texto: Conversão de voz em português para texto usando react-speech-recognition.
+- Tradução de Texto: Tradução do texto de portExecutando o Aplicativo e o Servidoruguês para inglês.
+- Resposta de Áudio: Geração de resposta de áudio em inglês a partir do texto traduzido.
+
+## Configuração de Speech-to-Text
+
+Para capturar a voz do usuário e convertê-la em texto, o projeto utiliza a seguinte configuração no Chainlit:
+
+```
+# Permite ao usuário usar voz para texto
+[features.speech_to_text]
+    enabled = true
+    # Veja todas as línguas aqui: https://github.com/JamesBrill/react-speech-recognition/blob/HEAD/docs/API.md#language-string
+    language = "pt-BR"
+```
 
 ## Instalação e Execução
 
@@ -21,14 +34,21 @@ Este projeto envolve a criação de um chatbot avançado usando o modelo de Ling
 ```
 cd seu_workspace
 git clone github.com/ipatriciahonorato/modulo-8.git
-cd seu_workspace/modulo-8/ponderada_5
+cd seu_workspace/modulo-8/ponderada_8
 ```
 
 ### Instalação de Dependências:
 
+Para o aplicativo do chainlit (na pasta raíz do projeto):
 ```
 python3 -m venv llm
 source llm/bin/activate
+pip install -r requirements.txt
+```
+Para o servidor(na pasta do server):
+```
+python3 -m venv server_env
+source server_env/bin/activate
 pip install -r requirements.txt
 ```
 ### Configuração de Variáveis de Ambiente
@@ -37,21 +57,22 @@ Crie um arquivo .env na raiz do projeto com a chave de API da OpenAI:
 ```
 OPENAI_API_KEY=sua_chave_de_api_aqui
 ```
-### Preparação do Arquivo PDF
+### Executando o aplicativo e servidor
 
-Utilize o arquivo pdf do documento ["Workshop rules and safety considerations".](https://github.com/ipatriciahonorato/modulo-8/blob/main/ponderada_5/Workshop%20rules%20and%20safety%20considerations%20_%20Students.pdf)
-
-### Executando o ChatBot
+Na pasta raíz, execute:
 
 ```
 chainlit run app.py -w
 ```
-### Interagindo com o ChatBot
+Na pasta do servidor, execite:
+```
+flask --app server run --debug
+```
 
-- Faça o upload do PDF quando solicitado.
-- Após o processamento, faça perguntas relacionadas ao conteúdo do PDF.
-- Receba respostas baseadas no modelo LLM da OpenAI.
+### Interagindo com o Tradutor
+- Utilize a interface do Chainlit para enviar voz em português.
+- Receba a tradução em texto e áudio em inglês.
 
 ## Vídeo Demonstrativo
 
-Disponível nesse [link](https://www.youtube.com/watch?v=6aw6G0HP_l8).
+[![Watch the video](http://i3.ytimg.com/vi/vwyDSaoGbnM/hqdefault.jpg)](https://www.youtube.com/watch?v=vwyDSaoGbnM)
